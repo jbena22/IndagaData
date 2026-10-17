@@ -1,0 +1,32 @@
+{
+  "verifiedAt": "2026-10-17T13:38:48.848Z",
+  "applicationBaseCommit": "f3461c4f9f5685aa4513ba8f96aefcb1b1727408",
+  "applicationFilesUnchanged": true,
+  "localVerifiedImprovementsAlreadyIncluded": true,
+  "runtime": "v24.21.0",
+  "model": "gemini-3.5-flash-lite",
+  "tests": {
+    "passed": 46,
+    "failed": 0,
+    "transport": "Gemini automated tests use mocks; no provider calls"
+  },
+  "build": "passed",
+  "artifact": "passed",
+  "pandas": {
+    "monthly": 48,
+    "segments": 1008,
+    "populationAndMigrations": 1340
+  },
+  "sourceSHA256": "29d471174a41f2a4ca13599c669d3e183933797f38eec926c5d57039ff351ada",
+  "COP": {
+    "balanceDelta": -715859081,
+    "libreInversionContribution": -256711009
+  },
+  "reconciliation": {
+    "contributions": 0,
+    "population": 0,
+    "migrations": 0,
+    "risk": 0
+  },
+  "publicationStatus": "Pre-publication checks passed; Sites deployment and public browser checks recorded separately after execution"
+}

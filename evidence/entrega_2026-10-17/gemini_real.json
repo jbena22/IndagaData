@@ -1,0 +1,39 @@
+{
+  "verifiedAtBogota": "2026-10-17 08:39:40",
+  "transport": "native fetch to actual Gemini API; no mock",
+  "keyPresent": true,
+  "freeTierConfirmedForThisRun": true,
+  "configurationPersisted": false,
+  "provider": {
+    "attempted": true,
+    "model": "gemini-3.5-flash-lite",
+    "timeoutConfigured": true,
+    "httpStatus": 200,
+    "contentType": "application/json; charset=UTF-8"
+  },
+  "elapsedMs": 2432,
+  "apiStatus": 200,
+  "question": "Entre noviembre y diciembre de 2025, ¿cuánto cambió el saldo total y qué producto aporta más por magnitud? Expresa los importes en COP y la contribución neta en porcentaje; cita los campos usados. Distingue hechos observados de causas que este CSV no permite demostrar.",
+  "options": {
+    "from": "2025-11-30",
+    "to": "2025-12-31",
+    "metric": "SALDO_TOTAL",
+    "dimension": "PRODUCTO",
+    "filters": {}
+  },
+  "sourceSHA256": "29d471174a41f2a4ca13599c669d3e183933797f38eec926c5d57039ff351ada",
+  "expectedCOP": {
+    "balance": 21056687117,
+    "delta": -715859081,
+    "largestSegment": "CONSUMO_LIBRE_INVERSION",
+    "largestContribution": -256711009,
+    "netContributionPct": 35.86055074434405
+  },
+  "evidenceMatchesEngine": true,
+  "answer": "Entre el 30 de noviembre y el 31 de diciembre de 2025 (`from`: `2025-11-30`, `to`: `2025-12-31`), según el campo `changes.SALDO_TOTAL`, el saldo total cambió en -715.859.081,00 COP (pasando de un saldo base de 21.772.546.198,00 COP a un saldo actual de 21.056.687.117,00 COP). \n\nEl producto que aporta más por magnitud a la variación negativa es `CONSUMO_LIBRE_INVERSION` (campo `contributions`), con una reducción de -256.711.009,00 COP y una contribución neta (`netContribution`) de 35,860550744344055%.\n\n**HECHOS OBSERVADOS:** Las variaciones y contribuciones de saldo están registradas en los campos `changes.SALDO_TOTAL`, `delta` y `contributions`. \n\n**HIPÓTESIS NO VERIFICADAS:** Las causas subyacentes de estos cambios (como decisiones comerciales, pagos anticipados o comportamiento de los clientes) no están demostradas en la evidencia, ya que las variaciones observadas no prueban causalidad.",
+  "error": null,
+  "semanticReview": "A successful response still requires checking each figure and claim against deterministic evidence.",
+  "actualQuotaExhaustionTested": false,
+  "artificialQuotaExhaustionAttempted": false,
+  "deploymentPerformed": false
+}
