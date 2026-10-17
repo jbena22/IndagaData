@@ -1,0 +1,223 @@
+{
+  "date": "2026-10-16",
+  "status": "passed",
+  "oracle": "Independent pandas joins by credit ID and groupby; Decimal to integer cents",
+  "monthly_checks": 48,
+  "segment_checks": 1008,
+  "bridge_and_migration_cases": 1340,
+  "source_files": [
+    "data/demo.csv",
+    "tests/fixtures/population-movements.csv"
+  ],
+  "default_case": {
+    "file": "data/demo.csv",
+    "from": "2025-11-30",
+    "to": "2025-12-31",
+    "metric": "SALDO_TOTAL",
+    "filters": {},
+    "bridge": {
+      "metric": "SALDO_TOTAL",
+      "retained": {
+        "count": 1000,
+        "base": 2177254619800,
+        "current": 2105668711700,
+        "delta": -71585908100
+      },
+      "entered": {
+        "count": 0,
+        "base": 0,
+        "current": 0,
+        "delta": 0
+      },
+      "exited": {
+        "count": 0,
+        "base": 0,
+        "current": 0,
+        "delta": 0
+      },
+      "delta": -71585908100,
+      "reconciliation": 0
+    },
+    "migrations": {
+      "metric": "SALDO_TOTAL",
+      "retainedCount": 1000,
+      "changedCount": 318,
+      "unchangedCount": 682,
+      "base": 2177254619800,
+      "current": 2105668711700,
+      "delta": -71585908100,
+      "riskBase": 773628147200,
+      "riskCurrent": 728192295600,
+      "riskDelta": -45435851600,
+      "cells": [
+        {
+          "from": "A",
+          "to": "A",
+          "count": 272,
+          "base": 578414538900,
+          "current": 560266023100,
+          "delta": -18148515800,
+          "riskBase": 0,
+          "riskCurrent": 0,
+          "riskDelta": 0
+        },
+        {
+          "from": "A",
+          "to": "B",
+          "count": 61,
+          "base": 142852385000,
+          "current": 137990030100,
+          "delta": -4862354900,
+          "riskBase": 0,
+          "riskCurrent": 0,
+          "riskDelta": 0
+        },
+        {
+          "from": "A",
+          "to": "C",
+          "count": 3,
+          "base": 5685801100,
+          "current": 5448120700,
+          "delta": -237680400,
+          "riskBase": 0,
+          "riskCurrent": 5448120700,
+          "riskDelta": 5448120700
+        },
+        {
+          "from": "B",
+          "to": "A",
+          "count": 63,
+          "base": 136436894800,
+          "current": 132056611500,
+          "delta": -4380283300,
+          "riskBase": 0,
+          "riskCurrent": 0,
+          "riskDelta": 0
+        },
+        {
+          "from": "B",
+          "to": "B",
+          "count": 204,
+          "base": 433912655000,
+          "current": 419354631800,
+          "delta": -14558023200,
+          "riskBase": 0,
+          "riskCurrent": 0,
+          "riskDelta": 0
+        },
+        {
+          "from": "B",
+          "to": "C",
+          "count": 51,
+          "base": 100876849600,
+          "current": 96707118700,
+          "delta": -4169730900,
+          "riskBase": 0,
+          "riskCurrent": 96707118700,
+          "riskDelta": 96707118700
+        },
+        {
+          "from": "B",
+          "to": "D",
+          "count": 1,
+          "base": 5447348200,
+          "current": 5447524200,
+          "delta": 176000,
+          "riskBase": 0,
+          "riskCurrent": 5447524200,
+          "riskDelta": 5447524200
+        },
+        {
+          "from": "C",
+          "to": "B",
+          "count": 62,
+          "base": 131693773000,
+          "current": 127809119600,
+          "delta": -3884653400,
+          "riskBase": 131693773000,
+          "riskCurrent": 0,
+          "riskDelta": -131693773000
+        },
+        {
+          "from": "C",
+          "to": "C",
+          "count": 114,
+          "base": 265118702800,
+          "current": 256804328000,
+          "delta": -8314374800,
+          "riskBase": 265118702800,
+          "riskCurrent": 256804328000,
+          "riskDelta": -8314374800
+        },
+        {
+          "from": "C",
+          "to": "D",
+          "count": 31,
+          "base": 83569356500,
+          "current": 80585370700,
+          "delta": -2983985800,
+          "riskBase": 83569356500,
+          "riskCurrent": 80585370700,
+          "riskDelta": -2983985800
+        },
+        {
+          "from": "D",
+          "to": "C",
+          "count": 22,
+          "base": 70426990700,
+          "current": 67543755200,
+          "delta": -2883235500,
+          "riskBase": 70426990700,
+          "riskCurrent": 67543755200,
+          "riskDelta": -2883235500
+        },
+        {
+          "from": "D",
+          "to": "D",
+          "count": 48,
+          "base": 86482959100,
+          "current": 83434661900,
+          "delta": -3048297200,
+          "riskBase": 86482959100,
+          "riskCurrent": 83434661900,
+          "riskDelta": -3048297200
+        },
+        {
+          "from": "D",
+          "to": "E",
+          "count": 7,
+          "base": 10971503400,
+          "current": 10513199600,
+          "delta": -458303800,
+          "riskBase": 10971503400,
+          "riskCurrent": 10513199600,
+          "riskDelta": -458303800
+        },
+        {
+          "from": "E",
+          "to": "D",
+          "count": 17,
+          "base": 42676367200,
+          "current": 41358531000,
+          "delta": -1317836200,
+          "riskBase": 42676367200,
+          "riskCurrent": 41358531000,
+          "riskDelta": -1317836200
+        },
+        {
+          "from": "E",
+          "to": "E",
+          "count": 44,
+          "base": 82688494500,
+          "current": 80349685600,
+          "delta": -2338808900,
+          "riskBase": 82688494500,
+          "riskCurrent": 80349685600,
+          "riskDelta": -2338808900
+        }
+      ],
+      "reconciliation": 0,
+      "riskReconciliation": 0
+    }
+  }
+}

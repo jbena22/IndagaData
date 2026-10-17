@@ -1,0 +1,945 @@
+{
+  "id": 2,
+  "dateBogota": "2026-10-16 22:57:16",
+  "request": {
+    "options": {
+      "from": "2025-11-30",
+      "to": "2025-12-31",
+      "metric": "SALDO_TOTAL",
+      "dimension": "PRODUCTO",
+      "filters": {
+        "PRODUCTO": "VEHICULO",
+        "REGION": "BOGOTA"
+      }
+    },
+    "question": "Para la comparación y los filtros activos, indica saldo base, saldo actual, variación en COP y el producto con mayor aporte, incluyendo el importe firmado de su aporte en COP y su contribución neta en porcentaje. Cita los campos de evidencia. ¿Permiten estos datos demostrar la causa del cambio?",
+    "consent": true,
+    "decodedCSVTextSHA256": "6520c65847d4744e1f133515997fc4187aa0cdea9f02f011725b605dc8a6ab8b"
+  },
+  "provider": {
+    "attempted": true,
+    "origin": "https://generativelanguage.googleapis.com",
+    "path": "/v1beta/models/gemini-3.5-flash-lite:generateContent",
+    "transport": "native fetch; real Google API",
+    "httpStatus": 200,
+    "elapsedMs": 1761,
+    "finishReason": "STOP",
+    "modelVersion": "gemini-3.5-flash-lite",
+    "usage": {
+      "promptTokenCount": 5356,
+      "candidatesTokenCount": 349,
+      "totalTokenCount": 5705,
+      "promptTokensDetails": [
+        {
+          "modality": "TEXT",
+          "tokenCount": 5356
+        }
+      ],
+      "serviceTier": "standard"
+    },
+    "errorStatus": null
+  },
+  "sentToGoogle": {
+    "question": "Para la comparación y los filtros activos, indica saldo base, saldo actual, variación en COP y el producto con mayor aporte, incluyendo el importe firmado de su aporte en COP y su contribución neta en porcentaje. Cita los campos de evidencia. ¿Permiten estos datos demostrar la causa del cambio?",
+    "evidence": {
+      "process": {
+        "id": "banking-portfolio-v1",
+        "version": "1.0.0",
+        "label": "Cartera bancaria mensual",
+        "currency": "COP"
+      },
+      "from": "2025-11-30",
+      "to": "2025-12-31",
+      "metric": "SALDO_TOTAL",
+      "dimension": "PRODUCTO",
+      "filters": {
+        "PRODUCTO": "VEHICULO",
+        "REGION": "BOGOTA"
+      },
+      "base": {
+        "count": 50,
+        "clients": 50,
+        "SALDO_TOTAL": "1006183221.00",
+        "PROV_TOTAL": "50609095.00",
+        "SALDO_MORA_30_MAS": "205337859.00",
+        "SALDO_ALTO_RIESGO_CDE": "432633053.00",
+        "provisionRate": 0.05029809078877494,
+        "arrearsRate": 0.20407601191751537,
+        "riskRate": 0.4299744260990812,
+        "coverage": 0.24646743297347812
+      },
+      "current": {
+        "count": 50,
+        "clients": 50,
+        "SALDO_TOTAL": "980609235.00",
+        "PROV_TOTAL": "56598999.00",
+        "SALDO_MORA_30_MAS": "425085695.00",
+        "SALDO_ALTO_RIESGO_CDE": "416639664.00",
+        "provisionRate": 0.05771819903368542,
+        "arrearsRate": 0.43349142535864454,
+        "riskRate": 0.42487838083637874,
+        "coverage": 0.13314726810555222
+      },
+      "delta": "-25573986.00",
+      "relativeChange": -0.025416828134525213,
+      "contributions": [
+        {
+          "segment": "VEHICULO",
+          "base": "1006183221.00",
+          "current": "980609235.00",
+          "baseCount": 50,
+          "currentCount": 50,
+          "delta": "-25573986.00",
+          "relativeChange": -0.025416828134525213,
+          "netContribution": 1,
+          "grossShare": 1
+        }
+      ],
+      "reconciliation": "0.00",
+      "trend": [
+        {
+          "period": "2025-01-31",
+          "count": 50,
+          "clients": 50,
+          "SALDO_TOTAL": "1288126939.00",
+          "PROV_TOTAL": "46454477.00",
+          "SALDO_MORA_30_MAS": "404827440.00",
+          "SALDO_ALTO_RIESGO_CDE": "423910135.00",
+          "provisionRate": 0.03606358627672486,
+          "arrearsRate": 0.3142760451188732,
+          "riskRate": 0.3290903420815734,
+          "coverage": 0.11475130490166378
+        },
+        {
+          "period": "2025-02-28",
+          "count": 50,
+          "clients": 50,
+          "SALDO_TOTAL": "1258388808.00",
+          "PROV_TOTAL": "51733925.00",
+          "SALDO_MORA_30_MAS": "353532043.00",
+          "SALDO_ALTO_RIESGO_CDE": "428567175.00",
+          "provisionRate": 0.04111124055706001,
+          "arrearsRate": 0.2809402314709716,
+          "riskRate": 0.3405681712007089,
+          "coverage": 0.14633447243139994
+        },
+        {
+          "period": "2025-03-31",
+          "count": 50,
+          "clients": 50,
+          "SALDO_TOTAL": "1232148968.00",
+          "PROV_TOTAL": "48200270.00",
+          "SALDO_MORA_30_MAS": "334076999.00",
+          "SALDO_ALTO_RIESGO_CDE": "406108933.00",
+          "provisionRate": 0.039118865698713146,
+          "arrearsRate": 0.2711336110131774,
+          "riskRate": 0.3295940211346263,
+          "coverage": 0.14427892415305132
+        },
+        {
+          "period": "2025-04-30",
+          "count": 50,
+          "clients": 50,
+          "SALDO_TOTAL": "1205503917.00",
+          "PROV_TOTAL": "55229140.00",
+          "SALDO_MORA_30_MAS": "302622501.00",
+          "SALDO_ALTO_RIESGO_CDE": "407023090.00",
+          "provisionRate": 0.04581415225712618,
+          "arrearsRate": 0.251034025466381,
+          "riskRate": 0.3376373019284018,
+          "coverage": 0.18250176314549724
+        },
+        {
+          "period": "2025-05-31",
+          "count": 50,
+          "clients": 50,
+          "SALDO_TOTAL": "1176196955.00",
+          "PROV_TOTAL": "49986087.00",
+          "SALDO_MORA_30_MAS": "211469788.00",
+          "SALDO_ALTO_RIESGO_CDE": "414533519.00",
+          "provisionRate": 0.04249805849905469,
+          "arrearsRate": 0.179791137105945,
+          "riskRate": 0.3524354634976929,
+          "coverage": 0.23637460212519815
+        },
+        {
+          "period": "2025-06-30",
+          "count": 50,
+          "clients": 50,
+          "SALDO_TOTAL": "1148615780.00",
+          "PROV_TOTAL": "44341994.00",
+          "SALDO_MORA_30_MAS": "327937356.00",
+          "SALDO_ALTO_RIESGO_CDE": "387422231.00",
+          "provisionRate": 0.03860472298230136,
+          "arrearsRate": 0.2855065738344636,
+          "riskRate": 0.33729488811306424,
+          "coverage": 0.13521483048122154
+        },
+        {
+          "period": "2025-07-31",
+          "count": 50,
+          "clients": 50,
+          "SALDO_TOTAL": "1120232759.00",
+          "PROV_TOTAL": "67044623.00",
+          "SALDO_MORA_30_MAS": "147129242.00",
+          "SALDO_ALTO_RIESGO_CDE": "415726836.00",
+          "provisionRate": 0.0598488327192367,
+          "arrearsRate": 0.1313380998885786,
+          "riskRate": 0.3711075512298958,
+          "coverage": 0.45568523353093876
+        },
+        {
+          "period": "2025-08-31",
+          "count": 50,
+          "clients": 50,
+          "SALDO_TOTAL": "1090102457.00",
+          "PROV_TOTAL": "46120000.00",
+          "SALDO_MORA_30_MAS": "234664464.00",
+          "SALDO_ALTO_RIESGO_CDE": "459390432.00",
+          "provisionRate": 0.042307949774669666,
+          "arrearsRate": 0.2152682644581912,
+          "riskRate": 0.4214194996535083,
+          "coverage": 0.19653593566685068
+        },
+        {
+          "period": "2025-09-30",
+          "count": 50,
+          "clients": 50,
+          "SALDO_TOTAL": "1064680511.00",
+          "PROV_TOTAL": "50850663.00",
+          "SALDO_MORA_30_MAS": "182065640.00",
+          "SALDO_ALTO_RIESGO_CDE": "422918625.00",
+          "provisionRate": 0.04776142934394335,
+          "arrearsRate": 0.17100495230160176,
+          "riskRate": 0.39722585379418107,
+          "coverage": 0.27929851563425145
+        },
+        {
+          "period": "2025-10-31",
+          "count": 50,
+          "clients": 50,
+          "SALDO_TOTAL": "1034488006.00",
+          "PROV_TOTAL": "71562853.00",
+          "SALDO_MORA_30_MAS": "423332507.00",
+          "SALDO_ALTO_RIESGO_CDE": "423608152.00",
+          "provisionRate": 0.06917707366826639,
+          "arrearsRate": 0.4092193476818329,
+          "riskRate": 0.40948580316357963,
+          "coverage": 0.16904643942214434
+        },
+        {
+          "period": "2025-11-30",
+          "count": 50,
+          "clients": 50,
+          "SALDO_TOTAL": "1006183221.00",
+          "PROV_TOTAL": "50609095.00",
+          "SALDO_MORA_30_MAS": "205337859.00",
+          "SALDO_ALTO_RIESGO_CDE": "432633053.00",
+          "provisionRate": 0.05029809078877494,
+          "arrearsRate": 0.20407601191751537,
+          "riskRate": 0.4299744260990812,
+          "coverage": 0.24646743297347812
+        },
+        {
+          "period": "2025-12-31",
+          "count": 50,
+          "clients": 50,
+          "SALDO_TOTAL": "980609235.00",
+          "PROV_TOTAL": "56598999.00",
+          "SALDO_MORA_30_MAS": "425085695.00",
+          "SALDO_ALTO_RIESGO_CDE": "416639664.00",
+          "provisionRate": 0.05771819903368542,
+          "arrearsRate": 0.43349142535864454,
+          "riskRate": 0.42487838083637874,
+          "coverage": 0.13314726810555222
+        }
+      ],
+      "changes": {
+        "SALDO_TOTAL": {
+          "base": "1006183221.00",
+          "current": "980609235.00",
+          "delta": "-25573986.00",
+          "relativeChange": -0.025416828134525213
+        },
+        "PROV_TOTAL": {
+          "base": "50609095.00",
+          "current": "56598999.00",
+          "delta": "5989904.00",
+          "relativeChange": 0.11835627568523009
+        },
+        "SALDO_MORA_30_MAS": {
+          "base": "205337859.00",
+          "current": "425085695.00",
+          "delta": "219747836.00",
+          "relativeChange": 1.0701769126754166
+        },
+        "SALDO_ALTO_RIESGO_CDE": {
+          "base": "432633053.00",
+          "current": "416639664.00",
+          "delta": "-15993389.00",
+          "relativeChange": -0.03696756151453828
+        }
+      },
+      "rateChanges": {
+        "provisionRate": {
+          "base": 0.05029809078877494,
+          "current": 0.05771819903368542,
+          "pp": 0.7420108244910483
+        },
+        "arrearsRate": {
+          "base": 0.20407601191751537,
+          "current": 0.43349142535864454,
+          "pp": 22.941541344112917
+        },
+        "riskRate": {
+          "base": 0.4299744260990812,
+          "current": 0.42487838083637874,
+          "pp": -0.5096045262702464
+        },
+        "coverage": {
+          "base": 0.24646743297347812,
+          "current": 0.13314726810555222,
+          "pp": -11.33201648679259
+        }
+      },
+      "population": {
+        "entered": 0,
+        "exited": 0,
+        "retained": 50
+      },
+      "limits": [
+        "Variaciones observadas; no prueban causalidad.",
+        "No se suman saldos de distintos cortes como si fueran operaciones.",
+        "Cada dimensión es un desglose alternativo; no sumar contribuciones entre dimensiones.",
+        "Los cambios de clasificación pueden redistribuir saldos entre segmentos.",
+        "Entradas y salidas corresponden al ámbito filtrado; no demuestran desembolsos o cancelaciones.",
+        "La moneda COP fue confirmada por el usuario; no consta en el CSV."
+      ],
+      "populationBridge": {
+        "metric": "SALDO_TOTAL",
+        "retained": {
+          "count": 50,
+          "base": "1006183221.00",
+          "current": "980609235.00",
+          "delta": "-25573986.00"
+        },
+        "entered": {
+          "count": 0,
+          "base": "0.00",
+          "current": "0.00",
+          "delta": "0.00"
+        },
+        "exited": {
+          "count": 0,
+          "base": "0.00",
+          "current": "0.00",
+          "delta": "0.00"
+        },
+        "delta": "-25573986.00",
+        "reconciliation": "0.00"
+      },
+      "ratingMigrations": {
+        "metric": "SALDO_TOTAL",
+        "retainedCount": 50,
+        "changedCount": 16,
+        "unchangedCount": 34,
+        "base": "1006183221.00",
+        "current": "980609235.00",
+        "delta": "-25573986.00",
+        "riskBase": "432633053.00",
+        "riskCurrent": "416639664.00",
+        "riskDelta": "-15993389.00",
+        "cells": [
+          {
+            "from": "A",
+            "to": "A",
+            "count": 16,
+            "base": "304816728.00",
+            "current": "295640094.00",
+            "delta": "-9176634.00",
+            "riskBase": "0.00",
+            "riskCurrent": "0.00",
+            "riskDelta": "0.00"
+          },
+          {
+            "from": "A",
+            "to": "B",
+            "count": 3,
+            "base": "59869527.00",
+            "current": "59303376.00",
+            "delta": "-566151.00",
+            "riskBase": "0.00",
+            "riskCurrent": "0.00",
+            "riskDelta": "0.00"
+          },
+          {
+            "from": "B",
+            "to": "A",
+            "count": 4,
+            "base": "52982845.00",
+            "current": "50704520.00",
+            "delta": "-2278325.00",
+            "riskBase": "0.00",
+            "riskCurrent": "0.00",
+            "riskDelta": "0.00"
+          },
+          {
+            "from": "B",
+            "to": "B",
+            "count": 6,
+            "base": "97673019.00",
+            "current": "96233089.00",
+            "delta": "-1439930.00",
+            "riskBase": "0.00",
+            "riskCurrent": "0.00",
+            "riskDelta": "0.00"
+          },
+          {
+            "from": "B",
+            "to": "C",
+            "count": 3,
+            "base": "58208049.00",
+            "current": "56348497.00",
+            "delta": "-1859552.00",
+            "riskBase": "0.00",
+            "riskCurrent": "56348497.00",
+            "riskDelta": "56348497.00"
+          },
+          {
+            "from": "C",
+            "to": "B",
+            "count": 3,
+            "base": "62996759.00",
+            "current": "62088492.00",
+            "delta": "-908267.00",
+            "riskBase": "62996759.00",
+            "riskCurrent": "0.00",
+            "riskDelta": "-62996759.00"
+          },
+          {
+            "from": "C",
+            "to": "C",
+            "count": 7,
+            "base": "165503546.00",
+            "current": "158976011.00",
+            "delta": "-6527535.00",
+            "riskBase": "165503546.00",
+            "riskCurrent": "158976011.00",
+            "riskDelta": "-6527535.00"
+          },
+          {
+            "from": "C",
+            "to": "D",
+            "count": 1,
+            "base": "61429464.00",
+            "current": "61548445.00",
+            "delta": "118981.00",
+            "riskBase": "61429464.00",
+            "riskCurrent": "61548445.00",
+            "riskDelta": "118981.00"
+          },
+          {
+            "from": "D",
+            "to": "D",
+            "count": 4,
+            "base": "83161162.00",
+            "current": "81014739.00",
+            "delta": "-2146423.00",
+            "riskBase": "83161162.00",
+            "riskCurrent": "81014739.00",
+            "riskDelta": "-2146423.00"
+          },
+          {
+            "from": "D",
+            "to": "E",
+            "count": 1,
+            "base": "18226115.00",
+            "current": "18407057.00",
+            "delta": "180942.00",
+            "riskBase": "18226115.00",
+            "riskCurrent": "18407057.00",
+            "riskDelta": "180942.00"
+          },
+          {
+            "from": "E",
+            "to": "D",
+            "count": 1,
+            "base": "20407362.00",
+            "current": "20038473.00",
+            "delta": "-368889.00",
+            "riskBase": "20407362.00",
+            "riskCurrent": "20038473.00",
+            "riskDelta": "-368889.00"
+          },
+          {
+            "from": "E",
+            "to": "E",
+            "count": 1,
+            "base": "20908645.00",
+            "current": "20306442.00",
+            "delta": "-602203.00",
+            "riskBase": "20908645.00",
+            "riskCurrent": "20306442.00",
+            "riskDelta": "-602203.00"
+          }
+        ],
+        "reconciliation": "0.00",
+        "riskReconciliation": "0.00"
+      },
+      "units": "Importes monetarios: cadenas decimales exactas en pesos colombianos (COP). Ratios y contribuciones como fracciones; cambios de ratios en puntos porcentuales (pp). Recuentos como enteros."
+    }
+  },
+  "responseStatus": 200,
+  "response": {
+    "answer": "Con base en la evidencia `banking-portfolio-v1` (versión `1.0.0`), filtros (`PRODUCTO`: `VEHICULO`, `REGION`: `BOGOTA`) y período (`from`: `2025-11-30`, `to`: `2025-12-31`), se presentan los siguientes HECHOS OBSERVADOS para `SALDO_TOTAL`:\n\n* **Saldo base:** 1006183221.00 COP (campo `base` o `changes.SALDO_TOTAL.base`).\n* **Saldo actual:** 980609235.00 COP (campo `current` o `changes.SALDO_TOTAL.current`).\n* **Variación en COP:** -25573986.00 COP (campo `delta` o `changes.SALDO_TOTAL.delta`).\n* **Producto con mayor aporte:** `VEHICULO` (campo `contributions.segment`).\n* **Importe firmado de su aporte en COP:** -25573986.00 COP (campo `contributions.delta`).\n* **Contribución neta en porcentaje:** 100,00 % (campo `contributions.netContribution` multiplicada por 100).\n\n**¿Permiten estos datos demostrar la causa del cambio?**\n* **HIPÓTESIS NO VERIFICADAS:** No, los datos no permiten demostrar la causa del cambio. Según los límites establecidos en la evidencia (`limits`), las variaciones observadas no prueban causalidad.",
+    "model": "gemini-3.5-flash-lite",
+    "evidence": {
+      "process": {
+        "id": "banking-portfolio-v1",
+        "version": "1.0.0",
+        "label": "Cartera bancaria mensual",
+        "currency": "COP"
+      },
+      "from": "2025-11-30",
+      "to": "2025-12-31",
+      "metric": "SALDO_TOTAL",
+      "dimension": "PRODUCTO",
+      "filters": {
+        "PRODUCTO": "VEHICULO",
+        "REGION": "BOGOTA"
+      },
+      "base": {
+        "count": 50,
+        "clients": 50,
+        "SALDO_TOTAL": "1006183221.00",
+        "PROV_TOTAL": "50609095.00",
+        "SALDO_MORA_30_MAS": "205337859.00",
+        "SALDO_ALTO_RIESGO_CDE": "432633053.00",
+        "provisionRate": 0.05029809078877494,
+        "arrearsRate": 0.20407601191751537,
+        "riskRate": 0.4299744260990812,
+        "coverage": 0.24646743297347812
+      },
+      "current": {
+        "count": 50,
+        "clients": 50,
+        "SALDO_TOTAL": "980609235.00",
+        "PROV_TOTAL": "56598999.00",
+        "SALDO_MORA_30_MAS": "425085695.00",
+        "SALDO_ALTO_RIESGO_CDE": "416639664.00",
+        "provisionRate": 0.05771819903368542,
+        "arrearsRate": 0.43349142535864454,
+        "riskRate": 0.42487838083637874,
+        "coverage": 0.13314726810555222
+      },
+      "delta": "-25573986.00",
+      "relativeChange": -0.025416828134525213,
+      "contributions": [
+        {
+          "segment": "VEHICULO",
+          "base": "1006183221.00",
+          "current": "980609235.00",
+          "baseCount": 50,
+          "currentCount": 50,
+          "delta": "-25573986.00",
+          "relativeChange": -0.025416828134525213,
+          "netContribution": 1,
+          "grossShare": 1
+        }
+      ],
+      "reconciliation": "0.00",
+      "trend": [
+        {
+          "period": "2025-01-31",
+          "count": 50,
+          "clients": 50,
+          "SALDO_TOTAL": "1288126939.00",
+          "PROV_TOTAL": "46454477.00",
+          "SALDO_MORA_30_MAS": "404827440.00",
+          "SALDO_ALTO_RIESGO_CDE": "423910135.00",
+          "provisionRate": 0.03606358627672486,
+          "arrearsRate": 0.3142760451188732,
+          "riskRate": 0.3290903420815734,
+          "coverage": 0.11475130490166378
+        },
+        {
+          "period": "2025-02-28",
+          "count": 50,
+          "clients": 50,
+          "SALDO_TOTAL": "1258388808.00",
+          "PROV_TOTAL": "51733925.00",
+          "SALDO_MORA_30_MAS": "353532043.00",
+          "SALDO_ALTO_RIESGO_CDE": "428567175.00",
+          "provisionRate": 0.04111124055706001,
+          "arrearsRate": 0.2809402314709716,
+          "riskRate": 0.3405681712007089,
+          "coverage": 0.14633447243139994
+        },
+        {
+          "period": "2025-03-31",
+          "count": 50,
+          "clients": 50,
+          "SALDO_TOTAL": "1232148968.00",
+          "PROV_TOTAL": "48200270.00",
+          "SALDO_MORA_30_MAS": "334076999.00",
+          "SALDO_ALTO_RIESGO_CDE": "406108933.00",
+          "provisionRate": 0.039118865698713146,
+          "arrearsRate": 0.2711336110131774,
+          "riskRate": 0.3295940211346263,
+          "coverage": 0.14427892415305132
+        },
+        {
+          "period": "2025-04-30",
+          "count": 50,
+          "clients": 50,
+          "SALDO_TOTAL": "1205503917.00",
+          "PROV_TOTAL": "55229140.00",
+          "SALDO_MORA_30_MAS": "302622501.00",
+          "SALDO_ALTO_RIESGO_CDE": "407023090.00",
+          "provisionRate": 0.04581415225712618,
+          "arrearsRate": 0.251034025466381,
+          "riskRate": 0.3376373019284018,
+          "coverage": 0.18250176314549724
+        },
+        {
+          "period": "2025-05-31",
+          "count": 50,
+          "clients": 50,
+          "SALDO_TOTAL": "1176196955.00",
+          "PROV_TOTAL": "49986087.00",
+          "SALDO_MORA_30_MAS": "211469788.00",
+          "SALDO_ALTO_RIESGO_CDE": "414533519.00",
+          "provisionRate": 0.04249805849905469,
+          "arrearsRate": 0.179791137105945,
+          "riskRate": 0.3524354634976929,
+          "coverage": 0.23637460212519815
+        },
+        {
+          "period": "2025-06-30",
+          "count": 50,
+          "clients": 50,
+          "SALDO_TOTAL": "1148615780.00",
+          "PROV_TOTAL": "44341994.00",
+          "SALDO_MORA_30_MAS": "327937356.00",
+          "SALDO_ALTO_RIESGO_CDE": "387422231.00",
+          "provisionRate": 0.03860472298230136,
+          "arrearsRate": 0.2855065738344636,
+          "riskRate": 0.33729488811306424,
+          "coverage": 0.13521483048122154
+        },
+        {
+          "period": "2025-07-31",
+          "count": 50,
+          "clients": 50,
+          "SALDO_TOTAL": "1120232759.00",
+          "PROV_TOTAL": "67044623.00",
+          "SALDO_MORA_30_MAS": "147129242.00",
+          "SALDO_ALTO_RIESGO_CDE": "415726836.00",
+          "provisionRate": 0.0598488327192367,
+          "arrearsRate": 0.1313380998885786,
+          "riskRate": 0.3711075512298958,
+          "coverage": 0.45568523353093876
+        },
+        {
+          "period": "2025-08-31",
+          "count": 50,
+          "clients": 50,
+          "SALDO_TOTAL": "1090102457.00",
+          "PROV_TOTAL": "46120000.00",
+          "SALDO_MORA_30_MAS": "234664464.00",
+          "SALDO_ALTO_RIESGO_CDE": "459390432.00",
+          "provisionRate": 0.042307949774669666,
+          "arrearsRate": 0.2152682644581912,
+          "riskRate": 0.4214194996535083,
+          "coverage": 0.19653593566685068
+        },
+        {
+          "period": "2025-09-30",
+          "count": 50,
+          "clients": 50,
+          "SALDO_TOTAL": "1064680511.00",
+          "PROV_TOTAL": "50850663.00",
+          "SALDO_MORA_30_MAS": "182065640.00",
+          "SALDO_ALTO_RIESGO_CDE": "422918625.00",
+          "provisionRate": 0.04776142934394335,
+          "arrearsRate": 0.17100495230160176,
+          "riskRate": 0.39722585379418107,
+          "coverage": 0.27929851563425145
+        },
+        {
+          "period": "2025-10-31",
+          "count": 50,
+          "clients": 50,
+          "SALDO_TOTAL": "1034488006.00",
+          "PROV_TOTAL": "71562853.00",
+          "SALDO_MORA_30_MAS": "423332507.00",
+          "SALDO_ALTO_RIESGO_CDE": "423608152.00",
+          "provisionRate": 0.06917707366826639,
+          "arrearsRate": 0.4092193476818329,
+          "riskRate": 0.40948580316357963,
+          "coverage": 0.16904643942214434
+        },
+        {
+          "period": "2025-11-30",
+          "count": 50,
+          "clients": 50,
+          "SALDO_TOTAL": "1006183221.00",
+          "PROV_TOTAL": "50609095.00",
+          "SALDO_MORA_30_MAS": "205337859.00",
+          "SALDO_ALTO_RIESGO_CDE": "432633053.00",
+          "provisionRate": 0.05029809078877494,
+          "arrearsRate": 0.20407601191751537,
+          "riskRate": 0.4299744260990812,
+          "coverage": 0.24646743297347812
+        },
+        {
+          "period": "2025-12-31",
+          "count": 50,
+          "clients": 50,
+          "SALDO_TOTAL": "980609235.00",
+          "PROV_TOTAL": "56598999.00",
+          "SALDO_MORA_30_MAS": "425085695.00",
+          "SALDO_ALTO_RIESGO_CDE": "416639664.00",
+          "provisionRate": 0.05771819903368542,
+          "arrearsRate": 0.43349142535864454,
+          "riskRate": 0.42487838083637874,
+          "coverage": 0.13314726810555222
+        }
+      ],
+      "changes": {
+        "SALDO_TOTAL": {
+          "base": "1006183221.00",
+          "current": "980609235.00",
+          "delta": "-25573986.00",
+          "relativeChange": -0.025416828134525213
+        },
+        "PROV_TOTAL": {
+          "base": "50609095.00",
+          "current": "56598999.00",
+          "delta": "5989904.00",
+          "relativeChange": 0.11835627568523009
+        },
+        "SALDO_MORA_30_MAS": {
+          "base": "205337859.00",
+          "current": "425085695.00",
+          "delta": "219747836.00",
+          "relativeChange": 1.0701769126754166
+        },
+        "SALDO_ALTO_RIESGO_CDE": {
+          "base": "432633053.00",
+          "current": "416639664.00",
+          "delta": "-15993389.00",
+          "relativeChange": -0.03696756151453828
+        }
+      },
+      "rateChanges": {
+        "provisionRate": {
+          "base": 0.05029809078877494,
+          "current": 0.05771819903368542,
+          "pp": 0.7420108244910483
+        },
+        "arrearsRate": {
+          "base": 0.20407601191751537,
+          "current": 0.43349142535864454,
+          "pp": 22.941541344112917
+        },
+        "riskRate": {
+          "base": 0.4299744260990812,
+          "current": 0.42487838083637874,
+          "pp": -0.5096045262702464
+        },
+        "coverage": {
+          "base": 0.24646743297347812,
+          "current": 0.13314726810555222,
+          "pp": -11.33201648679259
+        }
+      },
+      "population": {
+        "entered": 0,
+        "exited": 0,
+        "retained": 50
+      },
+      "limits": [
+        "Variaciones observadas; no prueban causalidad.",
+        "No se suman saldos de distintos cortes como si fueran operaciones.",
+        "Cada dimensión es un desglose alternativo; no sumar contribuciones entre dimensiones.",
+        "Los cambios de clasificación pueden redistribuir saldos entre segmentos.",
+        "Entradas y salidas corresponden al ámbito filtrado; no demuestran desembolsos o cancelaciones.",
+        "La moneda COP fue confirmada por el usuario; no consta en el CSV."
+      ],
+      "populationBridge": {
+        "metric": "SALDO_TOTAL",
+        "retained": {
+          "count": 50,
+          "base": "1006183221.00",
+          "current": "980609235.00",
+          "delta": "-25573986.00"
+        },
+        "entered": {
+          "count": 0,
+          "base": "0.00",
+          "current": "0.00",
+          "delta": "0.00"
+        },
+        "exited": {
+          "count": 0,
+          "base": "0.00",
+          "current": "0.00",
+          "delta": "0.00"
+        },
+        "delta": "-25573986.00",
+        "reconciliation": "0.00"
+      },
+      "ratingMigrations": {
+        "metric": "SALDO_TOTAL",
+        "retainedCount": 50,
+        "changedCount": 16,
+        "unchangedCount": 34,
+        "base": "1006183221.00",
+        "current": "980609235.00",
+        "delta": "-25573986.00",
+        "riskBase": "432633053.00",
+        "riskCurrent": "416639664.00",
+        "riskDelta": "-15993389.00",
+        "cells": [
+          {
+            "from": "A",
+            "to": "A",
+            "count": 16,
+            "base": "304816728.00",
+            "current": "295640094.00",
+            "delta": "-9176634.00",
+            "riskBase": "0.00",
+            "riskCurrent": "0.00",
+            "riskDelta": "0.00"
+          },
+          {
+            "from": "A",
+            "to": "B",
+            "count": 3,
+            "base": "59869527.00",
+            "current": "59303376.00",
+            "delta": "-566151.00",
+            "riskBase": "0.00",
+            "riskCurrent": "0.00",
+            "riskDelta": "0.00"
+          },
+          {
+            "from": "B",
+            "to": "A",
+            "count": 4,
+            "base": "52982845.00",
+            "current": "50704520.00",
+            "delta": "-2278325.00",
+            "riskBase": "0.00",
+            "riskCurrent": "0.00",
+            "riskDelta": "0.00"
+          },
+          {
+            "from": "B",
+            "to": "B",
+            "count": 6,
+            "base": "97673019.00",
+            "current": "96233089.00",
+            "delta": "-1439930.00",
+            "riskBase": "0.00",
+            "riskCurrent": "0.00",
+            "riskDelta": "0.00"
+          },
+          {
+            "from": "B",
+            "to": "C",
+            "count": 3,
+            "base": "58208049.00",
+            "current": "56348497.00",
+            "delta": "-1859552.00",
+            "riskBase": "0.00",
+            "riskCurrent": "56348497.00",
+            "riskDelta": "56348497.00"
+          },
+          {
+            "from": "C",
+            "to": "B",
+            "count": 3,
+            "base": "62996759.00",
+            "current": "62088492.00",
+            "delta": "-908267.00",
+            "riskBase": "62996759.00",
+            "riskCurrent": "0.00",
+            "riskDelta": "-62996759.00"
+          },
+          {
+            "from": "C",
+            "to": "C",
+            "count": 7,
+            "base": "165503546.00",
+            "current": "158976011.00",
+            "delta": "-6527535.00",
+            "riskBase": "165503546.00",
+            "riskCurrent": "158976011.00",
+            "riskDelta": "-6527535.00"
+          },
+          {
+            "from": "C",
+            "to": "D",
+            "count": 1,
+            "base": "61429464.00",
+            "current": "61548445.00",
+            "delta": "118981.00",
+            "riskBase": "61429464.00",
+            "riskCurrent": "61548445.00",
+            "riskDelta": "118981.00"
+          },
+          {
+            "from": "D",
+            "to": "D",
+            "count": 4,
+            "base": "83161162.00",
+            "current": "81014739.00",
+            "delta": "-2146423.00",
+            "riskBase": "83161162.00",
+            "riskCurrent": "81014739.00",
+            "riskDelta": "-2146423.00"
+          },
+          {
+            "from": "D",
+            "to": "E",
+            "count": 1,
+            "base": "18226115.00",
+            "current": "18407057.00",
+            "delta": "180942.00",
+            "riskBase": "18226115.00",
+            "riskCurrent": "18407057.00",
+            "riskDelta": "180942.00"
+          },
+          {
+            "from": "E",
+            "to": "D",
+            "count": 1,
+            "base": "20407362.00",
+            "current": "20038473.00",
+            "delta": "-368889.00",
+            "riskBase": "20407362.00",
+            "riskCurrent": "20038473.00",
+            "riskDelta": "-368889.00"
+          },
+          {
+            "from": "E",
+            "to": "E",
+            "count": 1,
+            "base": "20908645.00",
+            "current": "20306442.00",
+            "delta": "-602203.00",
+            "riskBase": "20908645.00",
+            "riskCurrent": "20306442.00",
+            "riskDelta": "-602203.00"
+          }
+        ],
+        "reconciliation": "0.00",
+        "riskReconciliation": "0.00"
+      },
+      "units": "Importes monetarios: cadenas decimales exactas en pesos colombianos (COP). Ratios y contribuciones como fracciones; cambios de ratios en puntos porcentuales (pp). Recuentos como enteros."
+    },
+    "notice": "Texto generado por IA; comprueba sus afirmaciones frente a la evidencia. No demuestra causalidad."
+  }
+}

@@ -1,0 +1,102 @@
+{
+  "date": "2026-10-16",
+  "status": "passed_for_tested_cases",
+  "model": "gemini-3.5-flash-lite",
+  "realBrowserQueries": [
+    {
+      "id": 1,
+      "selection": {
+        "from": "2025-11-30",
+        "to": "2025-12-31",
+        "metric": "SALDO_TOTAL",
+        "dimension": "PRODUCTO",
+        "filters": {
+          "PRODUCTO": "",
+          "REGION": ""
+        }
+      },
+      "providerHTTP": 200,
+      "elapsedMs": 1677,
+      "exactEvidence": true,
+      "displayEqualsAPIResponse": true,
+      "monetaryValuesMatched": true,
+      "monetaryUnit": "COP",
+      "largestContributionCOP": -256711009,
+      "causesInvented": false,
+      "semanticReview": "Codex reviewed all three responses; each rejects establishing causes from the CSV. Numeric checks passed; no general semantic guarantee is claimed."
+    },
+    {
+      "id": 2,
+      "selection": {
+        "from": "2025-11-30",
+        "to": "2025-12-31",
+        "metric": "SALDO_TOTAL",
+        "dimension": "PRODUCTO",
+        "filters": {
+          "PRODUCTO": "VEHICULO",
+          "REGION": "BOGOTA"
+        }
+      },
+      "providerHTTP": 200,
+      "elapsedMs": 1761,
+      "exactEvidence": true,
+      "displayEqualsAPIResponse": true,
+      "monetaryValuesMatched": true,
+      "monetaryUnit": "COP",
+      "largestContributionCOP": -25573986,
+      "causesInvented": false,
+      "semanticReview": "Codex reviewed all three responses; each rejects establishing causes from the CSV. Numeric checks passed; no general semantic guarantee is claimed."
+    },
+    {
+      "id": 3,
+      "selection": {
+        "from": "2025-11-30",
+        "to": "2025-12-31",
+        "metric": "SALDO_TOTAL",
+        "dimension": "PRODUCTO",
+        "filters": {
+          "PRODUCTO": "",
+          "REGION": ""
+        }
+      },
+      "providerHTTP": 200,
+      "elapsedMs": 2031,
+      "exactEvidence": true,
+      "displayEqualsAPIResponse": true,
+      "monetaryValuesMatched": true,
+      "monetaryUnit": "COP",
+      "largestContributionCOP": -256711009,
+      "causesInvented": false,
+      "semanticReview": "Codex reviewed all three responses; each rejects establishing causes from the CSV. Numeric checks passed; no general semantic guarantee is claimed."
+    }
+  ],
+  "tests": {
+    "passed": 46,
+    "failed": 0
+  },
+  "financialBaselineComparisons": 1320,
+  "downloads": {
+    "filteredHTML": true,
+    "filteredJSONRetainsCents": true,
+    "filteredCSV": true,
+    "generalCSVByteEqualToV2": true
+  },
+  "unchanged": {
+    "src/processes/banking.mjs": true,
+    "src/core/math.mjs": true,
+    "src/core/csv.mjs": true,
+    "src/ui.mjs": true,
+    "src/report.mjs": true,
+    "data/demo.csv": true,
+    "../dataset_bancario_1_cartera_mensual.csv": true
+  },
+  "consoleErrors": 0,
+  "freeTier": "User confirmed project without billing; declaration enabled only in QA process memory; no billing configuration changes.",
+  "limitations": [
+    "Three real responses reviewed; not a guarantee for every question.",
+    "Model may vary separators and percentage precision; tested money amounts are directly in COP.",
+    "No deliberate real quota exhaustion; errors/timeouts covered by deterministic tests.",
+    "QA instrumentation observes native fetch without mocks and is not deployed."
+  ],
+  "deploymentPerformed": false
+}

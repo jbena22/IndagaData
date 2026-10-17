@@ -1,0 +1,11 @@
+import {readFileSync,writeFileSync,mkdirSync} from 'node:fs';
+import {createHash} from 'node:crypto';
+import {validateCSV,analyse,contributionCSV} from '../src/engine.mjs';
+import {buildReport} from '../src/report.mjs';
+const csv=readFileSync('data/demo.csv','utf8');const v=validateCSV(csv);if(!v.ok)throw Error('Invalid demo');
+const r=analyse(v.rows);const meta={name:'dataset_bancario_1_cartera_mensual.csv (sintético autorizado)',sha256:createHash('sha256').update(csv).digest('hex'),generatedAt:new Date().toISOString(),units:'Centavos de COP en JSON; pesos en HTML y CSV.'};
+mkdirSync('evidence',{recursive:true});
+writeFileSync('evidence/informe_ejemplo.html',buildReport(r,meta,v));
+writeFileSync('evidence/resultado_ejemplo.json',JSON.stringify({metadata:meta,validation:{rows:v.rowCount,errors:v.errors,warnings:v.warnings},evidence:r},null,2));
+writeFileSync('evidence/contribuciones_ejemplo.csv',contributionCSV(r));
+console.log(JSON.stringify({sha256:meta.sha256,deltaCOP:r.delta/100,topContributionCOP:r.contributions[0].delta/100}));
