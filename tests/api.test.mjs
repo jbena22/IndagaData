@@ -1,8 +1,11 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import worker,{askGemini,geminiEvidence} from '../worker/index.js';
+import worker,{askGemini as askWithQuota,geminiEvidence,createQuotaLimiter} from '../worker/index.js';
 import {analyse,validateCSV,METRICS} from '../src/engine.mjs';
 import {readFileSync} from 'node:fs';
+// Las pruebas de transporte tienen presupuestos independientes. El alcance
+// real del contador y sus límites se comprueban en public-quota.test.mjs.
+const askGemini=(request,env,fetcher)=>askWithQuota(request,env,fetcher,createQuotaLimiter());
 const env={GEMINI_API_KEY:'fake-test-key',GEMINI_FREE_TIER_CONFIRMED:'true'};
 let id=0;const request=(extra={})=>new Request('https://indagadata.test/api/ask',{method:'POST',headers:{'content-type':'application/json','oai-authenticated-user-id':String(++id)},body:JSON.stringify({csv:readFileSync('data/demo.csv','utf8'),question:'¿Qué cambió?',consent:true,options:{},...extra})});
 test('no Gemini configuration leaves core routes functional',async()=>{const response=await worker.fetch(new Request('https://indagadata.test/'),{});assert.equal(response.status,200);const res=await askGemini(request(),{});assert.equal(res.status,503);});
