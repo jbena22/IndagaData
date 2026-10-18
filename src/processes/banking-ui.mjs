@@ -1,0 +1,75 @@
+import {escapeHTML as h,formatMoney as money,formatPercent as percent,buildReport,buildPopulationBridge,buildRatingMigrations} from '../report.mjs';
+export function startBanking(process){
+const {validate:validateCSV,analyse,totals,metrics:METRICS,dimensions:DIMENSIONS,exportCSV:contributionCSV,publicEvidence}=process;
+const $=id=>document.getElementById(id);
+const labels={PRODUCTO:'Producto',REGION:'Región',CLASE_CARTERA:'Clase de cartera',CALIFICACION_HOMOLOGADA:'Calificación',ESTADO_CREDITO:'Estado'};
+const rateLabels={provisionRate:'Provisión / saldo',arrearsRate:'Mora 30+ / saldo',riskRate:'C/D/E / saldo',coverage:'Cobertura agregada'};
+let state={csv:'',quality:null,result:null,name:'',sha256:'',ai:false,loading:false};
+const compact=n=>new Intl.NumberFormat('es-CO',{maximumFractionDigits:2}).format(n/100/1e9);
+const signed=n=>(n>0?'+':'')+money(n);
+const display=s=>String(s).replaceAll('_',' ');
+function message(text,type='success'){$('message').innerHTML=text?`<div class="notice ${h(type)}">${h(text)}</div>`:'';}
+function options(id,values,defaultValue){$(id).innerHTML=values.map(([v,label])=>`<option value="${h(v)}">${h(label)}</option>`).join('');if(defaultValue!==undefined)$(id).value=defaultValue;}
+function enableExports(enabled){for(const id of ['download','json-download','print','csv-download'])$(id).disabled=!enabled;}
+function presentPeriods(count){const single=count===1;
+ $('trend-subtitle').textContent=count===0?'':single?'1 corte disponible · la evolución requiere al menos dos cortes.':`${count} cortes · mismo ámbito de filtros en todos los periodos`;
+ $('metric-legend').textContent=count===0||single?'':METRICS[$('metric').value];
+ for(const id of ['from','to','metric','dimension']){$(id).disabled=single;$(id).title=single?'Se necesitan al menos dos cortes para comparar periodos.':'';}
+ for(const id of ['download','json-download','print','csv-download'])$(id).title=single?'Esta función requiere una comparación válida entre al menos dos cortes.':'';
+}
+function reset(){$('population-analysis').hidden=true;for(const id of ['population-bridge','rating-migrations'])$(id).innerHTML='';state.csv='';state.quality=null;state.result=null;state.name='';state.sha256='';$('analysis').hidden=true;$('empty').hidden=false;$('clear').disabled=true;enableExports(false);$('answer').textContent='';$('file').value='';$('source-name').textContent='Comienza con tus datos';$('source-detail').textContent='CSV de cartera mensual · máximo 5 MB · importes en COP';presentPeriods(0);message('');}
+async function load(text,name,originalBytes){reset();state.loading=true;$('demo').disabled=true;
+ try{const quality=validateCSV(text);state.quality=quality;state.name=name;
+  if(!quality.ok){$('source-name').textContent=name;message('Archivo bloqueado. No se analizaron registros.','error');$('message').innerHTML+=quality.errors.map(e=>`<div class="notice error"><strong>${h(e.rule)}</strong> · ${h(e.message)} · ${e.count} casos${e.examples.length?` · primeras filas CSV: ${h(e.examples.join(', '))}`:''}</div>`).join('');return;}
+  state.csv=text;const digest=await crypto.subtle.digest('SHA-256',originalBytes??new TextEncoder().encode(text));state.sha256=Array.from(new Uint8Array(digest),x=>x.toString(16).padStart(2,'0')).join('');
+  $('source-name').textContent=name;$('source-detail').textContent=`${quality.rowCount.toLocaleString('es-CO')} registros · ${quality.headers.length} columnas · ${quality.periods.length} ${quality.periods.length===1?'corte':'cortes'} · ${quality.periods[0]} a ${quality.periods.at(-1)} · COP`;
+  $('analysis').hidden=false;$('empty').hidden=true;$('clear').disabled=false;
+  options('from',quality.periods.map(s=>[s,s]),quality.periods.at(-2)??quality.periods[0]);options('to',quality.periods.map(s=>[s,s]),quality.periods.at(-1));
+  for(const [id,dimension] of [['filter-product','PRODUCTO'],['filter-region','REGION']])options(id,[['','Todos'],...[...new Set(quality.rows.map(r=>r[dimension]))].sort().map(v=>[v,display(v)])]);
+  renderQuality();update();
+ }catch(e){message(e.message,'error');}finally{state.loading=false;$('demo').disabled=false;}
+}
+function selections(){return {from:$('from').value,to:$('to').value,metric:$('metric').value,dimension:$('dimension').value,filters:{PRODUCTO:$('filter-product').value,REGION:$('filter-region').value}};}
+function update(){if(!state.quality?.ok)return;$('answer').textContent='';state.result=null;$('population-analysis').hidden=true;for(const id of ['population-bridge','rating-migrations'])$(id).innerHTML='';enableExports(false);presentPeriods(state.quality.periods.length);
+ try{const r=analyse(state.quality.rows,selections());state.result=r;message(r.base.count===0||r.current.count===0?'El filtro no tiene registros en uno o ambos cortes. Los importes de ámbitos vacíos se muestran como cero; los ratios sin denominador, como «—».':'');render(r);enableExports(true);}
+ catch(e){message(e.message,'error');for(const id of ['kpis','trend','trend-table','bars','contribution-table','ratios','reconcile','population'])$(id).innerHTML='';for(const id of ['finding-title','finding-text','finding-number','finding-share'])$(id).textContent='';if(state.quality.periods.length===1){message('Hay un solo corte. La comparación, el informe HTML, la evidencia JSON, el CSV y la impresión/PDF necesitan al menos dos cortes. Puedes consultar los indicadores y aplicar filtros.');const {filters}=selections();const snapshot=totals(state.quality.rows.filter(r=>Object.entries(filters).every(([k,v])=>!v||r[k]===v)));renderKpis({current:snapshot},false);}}
+ syncAsk();
+}
+function renderKpis(r,comparison=true){$('kpis').innerHTML=Object.entries(METRICS).map(([k,label])=>`<article class="kpi"><div class="kpi-label">${h(label)}</div><div class="kpi-value" title="${h(money(r.current[k]))} COP">${compact(r.current[k])} <small>mil M</small></div>${comparison?`<span class="change">${percent(r.changes[k].relativeChange)} vs. base</span><p class="small muted">${signed(r.changes[k].delta)} COP</p>`:'<p class="small muted">Importe del único corte disponible.</p>'}</article>`).join('');}
+function table(headers,rows,footer){return `<table><thead><tr>${headers.map(t=>`<th scope="col">${h(t)}</th>`).join('')}</tr></thead><tbody>${rows.map(r=>`<tr>${r.map(c=>`<td>${h(c)}</td>`).join('')}</tr>`).join('')}</tbody>${footer?`<tfoot><tr>${footer.map(c=>`<td>${h(c)}</td>`).join('')}</tr></tfoot>`:''}</table>`;}
+function render(r){renderKpis(r);renderTrend(r);renderBars(r);
+ $('population-analysis').hidden=false;$('population-bridge').innerHTML=buildPopulationBridge(r);$('rating-migrations').innerHTML=buildRatingMigrations(r);
+ const top=r.contributions[0];$('finding-title').textContent=top?display(top.segment):'Sin segmentos en el filtro';$('finding-text').textContent=top?`Es el mayor aporte por magnitud a la variación de ${METRICS[r.metric].toLowerCase()}, por ${labels[r.dimension].toLowerCase()}.`:'';
+ $('finding-number').textContent=top?signed(top.delta)+' COP':'—';$('finding-share').textContent=top?`${percent(top.netContribution)} de contribución neta · ${percent(top.grossShare)} del cambio bruto`:'';
+ $('population').innerHTML=[['En ambos cortes',r.population.retained],['Solo actual',r.population.entered],['Solo base',r.population.exited]].map(([t,n])=>`<span><strong>${n}</strong>${h(t)}</span>`).join('');
+ $('reconcile').innerHTML=`<strong>✓ Diferencia cero</strong><div class="equation">${money(r.contributions.reduce((a,g)=>a+g.delta,0))} − (${money(r.delta)}) = 0 COP</div>`;
+ $('contribution-table').innerHTML=table(['Segmento','Base · COP','Actual · COP','Aporte · COP','Variación %','Contribución neta','Peso bruto'],r.contributions.map(g=>[display(g.segment),money(g.base),money(g.current),signed(g.delta),percent(g.relativeChange),percent(g.netContribution),percent(g.grossShare)]),['TOTAL',money(r.base[r.metric]),money(r.current[r.metric]),signed(r.delta),percent(r.relativeChange),r.delta===0?'—':'100 %',r.contributions.some(g=>g.delta!==0)?'100 %':'—']);
+ $('ratios').innerHTML=Object.entries(rateLabels).map(([k,label])=>`<div class="ratio-item"><span class="small muted">${h(label)}</span><strong>${percent(r.current[k])}</strong><span class="small muted">Base ${percent(r.base[k])} · ${r.rateChanges[k].pp===null?'—':(r.rateChanges[k].pp>0?'+':'')+r.rateChanges[k].pp.toLocaleString('es-CO',{maximumFractionDigits:2})+' pp'}</span></div>`).join('');
+}
+function renderTrend(r){const data=r.trend,W=700,H=255,left=55,right=20,top=20,bottom=40;const max=Math.max(...data.map(t=>t[r.metric]),1);const x=i=>left+i*(W-left-right)/Math.max(data.length-1,1),y=n=>H-bottom-n/max*(H-top-bottom);const points=data.map((t,i)=>`${x(i)},${y(t[r.metric])}`).join(' ');
+ const grid=Array.from({length:5},(_,i)=>{const n=max*i/4;return `<line x1="${left}" x2="${W-right}" y1="${y(n)}" y2="${y(n)}" stroke="#e8efed"/><text x="${left-9}" y="${y(n)+4}" text-anchor="end">${compact(n)}</text>`;}).join('');
+ const labels=data.map((t,i)=>`<text x="${x(i)}" y="${H-15}" text-anchor="middle">${h(t.period.slice(5,7))}/${h(t.period.slice(2,4))}</text>`).join('');
+ const circles=data.map((t,i)=>`<circle cx="${x(i)}" cy="${y(t[r.metric])}" r="${[r.from,r.to].includes(t.period)?5:3}" fill="#087f79"><title>${h(t.period)}: ${money(t[r.metric])} COP</title></circle>`).join('');
+ $('trend').innerHTML=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${h(METRICS[r.metric])} por corte, COP. Cifras exactas en la tabla inferior.">${grid}<polygon points="${left},${H-bottom} ${points} ${x(data.length-1)},${H-bottom}" fill="#e9f5f1"/><polyline points="${points}" fill="none" stroke="#087f79" stroke-width="2.5"/>${circles}${labels}</svg>`;
+ $('trend-subtitle').textContent=`${r.trend.length} cortes · mismo ámbito de filtros en todos los periodos`;$('metric-legend').textContent=METRICS[r.metric];
+ $('trend-table').innerHTML=table(['Corte','Saldo COP','Provisiones COP','Mora 30+ COP','C/D/E COP'],r.trend.map(t=>[t.period,...Object.keys(METRICS).map(k=>money(t[k]))]));
+}
+function renderBars(r){const max=Math.max(...r.contributions.map(g=>Math.abs(g.delta)),1);$('bars').innerHTML=r.contributions.map(g=>`<div class="bar-row"><span class="bar-label">${h(display(g.segment))}</span><div class="bar-track"><div class="bar-fill ${g.delta>=0?'positive':''}" data-width="${Math.abs(g.delta)/max*100}" title="${h(signed(g.delta))} COP"></div></div><span class="bar-value">${h(signed(g.delta))}</span></div>`).join('');document.querySelectorAll('.bar-fill').forEach(el=>{el.style.width=el.dataset.width+'%';});}
+function renderQuality(){const q=state.quality;$('quality-content').innerHTML=`<div class="quality-grid"><div><strong>${q.rowCount.toLocaleString('es-CO')}</strong><span>Registros revisados</span></div><div><strong>0</strong><span>Errores bloqueantes</span></div><div><strong>${q.warnings.length}</strong><span>Tipos de advertencia</span></div><div><strong>${q.periods.length}</strong><span>Cortes disponibles</span></div></div>`+q.warnings.map(w=>`<div class="notice"><strong>${h(w.rule)}</strong> · ${h(w.message)}<br>${w.count} casos${w.examples.length?' · primeras filas CSV: '+h(w.examples.join(', ')):''}</div>`).join('')+`<p class="small muted">SHA-256: ${h(state.sha256)} · Validación sobre el archivo completo, antes de aplicar filtros.</p>`;}
+function download(content,name,type){const url=URL.createObjectURL(new Blob([content],{type}));const a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
+function metadata(){return {name:state.name,sha256:state.sha256,generatedAt:new Date().toISOString(),source:'CSV autorizado por el usuario; ejemplo sintético cuando se usa demo.csv',units:'Importes en centavos de COP dentro de la evidencia JSON; dividir entre 100. Ratios como fracciones.'};}
+options('metric',Object.entries(METRICS));options('dimension',DIMENSIONS.map(x=>[x,labels[x]]));
+for(const id of ['from','to','filter-product','filter-region','metric','dimension'])$(id).addEventListener('change',update);
+$('demo').addEventListener('click',loadDemo);async function loadDemo(){if(state.loading)return;try{message('Cargando y validando ejemplo…');const r=await fetch('/demo.csv');if(!r.ok)throw new Error('El ejemplo no está disponible. Importa el CSV del proyecto.');const bytes=await r.arrayBuffer();await load(new TextDecoder('utf-8',{fatal:true}).decode(bytes),'dataset_bancario_1_cartera_mensual.csv · ejemplo sintético',bytes);}catch(e){message(e.message,'error');}}
+$('file').addEventListener('change',async e=>{const f=e.target.files[0];if(!f)return;if(f.size>5_000_000){reset();message('Máximo 5 MB por archivo.','error');return;}try{const bytes=await f.arrayBuffer();await load(new TextDecoder('utf-8',{fatal:true}).decode(bytes),f.name,bytes);}catch(e){reset();message('No se pudo leer el archivo UTF-8. '+e.message,'error');}});
+$('clear').addEventListener('click',reset);
+$('download').addEventListener('click',()=>{if(!state.result)return;const r=state.result;download(buildReport(r,metadata(),state.quality),`indagadata_${r.from}_${r.to}.html`,'text/html;charset=utf-8');});
+$('json-download').addEventListener('click',()=>{if(!state.result)return;const r=state.result;download(JSON.stringify({metadata:metadata(),validation:{errors:state.quality.errors,warnings:state.quality.warnings},evidence:publicEvidence(r)},null,2),`evidencia_${r.from}_${r.to}.json`,'application/json');});
+$('csv-download').addEventListener('click',()=>{if(state.result)download(contributionCSV(state.result),`contribuciones_${state.result.dimension}_${state.result.from}_${state.result.to}.csv`,'text/csv;charset=utf-8');});
+$('print').addEventListener('click',()=>window.print());
+function syncAsk(){$('ask').disabled=!state.ai||!state.result||!$('consent').checked||!$('question').value.trim();}
+$('consent').addEventListener('change',syncAsk);$('question').addEventListener('input',syncAsk);
+$('ask').addEventListener('click',async()=>{if(!state.result)return;const prior=state.result;const question=$('question').value.trim();$('ask').disabled=true;$('answer').textContent='Consultando a Gemini con evidencia recalculada…';try{const res=await fetch('/api/ask',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({csv:state.csv,options:selections(),question,consent:$('consent').checked})});const data=await res.json();if(state.result!==prior)return;if(!res.ok)throw new Error(data.error);$('answer').textContent=data.answer+'\n\n'+data.notice;}catch(e){if(state.result===prior)$('answer').textContent=e.message;}finally{syncAsk();}});
+fetch('/api/status').then(r=>r.json()).then(data=>{state.ai=data.gemini;$('ai-status').textContent=data.gemini?'Gemini disponible · modalidad gratuita confirmada · 15 s entre consultas y 20/día UTC por instancia (contador no persistente); sujeto a cuota de Google':'Gemini sin configurar · análisis operativo';syncAsk();}).catch(()=>{$('ai-status').textContent='Gemini no disponible · análisis operativo';});
+return loadDemo();
+}

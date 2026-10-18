@@ -55,6 +55,8 @@ export async function askGemini(request,env,fetcher=fetch,quota=reserveGeminiQuo
  }catch{return json({error:'Gemini no respondió a tiempo o falló la conexión. El análisis permanece disponible.'},502);}
 }
 export default {async fetch(request,env){const url=new URL(request.url);
+ if(url.pathname==='/api/process-requests/status'){if(request.method!=='GET')return json({error:'Método no admitido.'},405);return json({available:!!env.DB,receipt:'private-storage'});}
+ if(url.pathname==='/api/process-requests')return receiveProcessRequest(request,env);
  if(url.pathname==='/api/status')return json({gemini:!!env.GEMINI_API_KEY&&env.GEMINI_FREE_TIER_CONFIRMED==='true',model:API_MODEL,limits:{dailyRequests:GLOBAL_DAILY_LIMIT,dayTimezone:'UTC',intervalSeconds:GLOBAL_INTERVAL_MS/1000,scope:'isolate-memory',persistent:false}});
  if(url.pathname==='/api/ask'){if(request.method!=='POST')return json({error:'Método no admitido.'},405);return askGemini(request,env);}
  if(!['GET','HEAD'].includes(request.method))return new Response('Método no admitido',{status:405});

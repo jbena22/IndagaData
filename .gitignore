@@ -4,6 +4,9 @@ dist/
 .env.*
 !.env.example
 .sites-local/
+.sites-runtime/
+*.sqlite
+*.sqlite-*
 *.tar.gz
 *.log
 __pycache__/

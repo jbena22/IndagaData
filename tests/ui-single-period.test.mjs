@@ -8,7 +8,7 @@ import * as engine from '../src/engine.mjs';
 import * as report from '../src/report.mjs';
 
 // Ejecuta la UI real con DOM/eventos/descargas simulados, sin red ni dependencias.
-const uiSource=readFileSync(new URL('../src/ui.mjs',import.meta.url),'utf8');
+const uiSource=readFileSync(new URL('../src/processes/banking-ui.mjs',import.meta.url),'utf8');
 const demo=readFileSync(new URL('../data/demo.csv',import.meta.url),'utf8');
 const raw=parseCSV(demo);
 const january=raw.records.filter(r=>r.FECHA_CORTE==='2025-01-31');
@@ -25,7 +25,7 @@ async function mount(csv,{ai=false,ask}={}){
  const context={...engine,...report,h:report.escapeHTML,money:report.formatMoney,percent:report.formatPercent,document,fetch,crypto:webcrypto,TextDecoder,Blob,
  URL:{createObjectURL(blob){const url='blob:test/'+blobs.size;blobs.set(url,blob);return url;},revokeObjectURL(){}},
  setTimeout(){},window:{print(){}}};
- await runInNewContext(uiSource.replace(/^import .*;\r?\n/gm,''),context);
+ await runInNewContext(uiSource.replace(/^import .*;\r?\n/gm,'').replace('export function startBanking','function startBanking')+'\nstartBanking(REGISTRY[\"banking-portfolio-v1\"]);',context);
  function change(values){for(const [id,value] of Object.entries(values))node(id).value=value;const id=Object.keys(values)[0];node(id).handlers.change();}
  function setFilters(filters={}){change({'filter-product':filters.PRODUCTO??'','filter-region':filters.REGION??''});}
  function kpis(){return [...node('kpis').innerHTML.matchAll(/title="([^"]+) COP"/g)].map(m=>Number(m[1].replaceAll('.','').replace(',','.')));}

@@ -1,10 +1,10 @@
 # IndagaData
 
-MVP de investigación de variaciones de cartera bancaria, desarrollado con Codex para Big School. Solo incluye el proceso bancario y datos sintéticos autorizados en COP. Hay componentes comunes y un registro de procesos; la interfaz y los informes aún están especializados en cartera bancaria.
+MVP de investigación de variaciones de cartera bancaria, desarrollado con Codex para Big School. Solo incluye el proceso bancario y datos sintéticos autorizados en COP. El catálogo se genera desde un registro común; cada proceso declara su contrato, validación, motor y vista. No se han añadido otros procesos especializados.
 
 ## Ejecutar localmente
 
-Necesita Node.js 20 o posterior. No hay paquetes de producción que instalar. Ejecutar desde `app/` en la carpeta de trabajo, o desde la raíz de la copia preparada para GitHub:
+Necesita Node.js 24 para SQLite local. No hay paquetes de producción que instalar. Ejecutar desde la raíz del proyecto:
 
 ```powershell
 node scripts/build.mjs
@@ -44,12 +44,20 @@ Referencias oficiales: [precios](https://ai.google.dev/gemini-api/docs/pricing),
 
 ## Estructura y documentación
 
-`src/core/` contiene CSV y aritmética; `src/processes/banking.mjs` contiene las reglas bancarias; `src/ui.mjs`, `src/report.mjs` y `worker/api.mjs` separan interfaz, informes e IA. El puente descompone la variación entre créditos presentes en ambos cortes, entradas y salidas del ámbito filtrado. Las migraciones solo consideran créditos presentes en ambos cortes. Ninguno de esos desgloses demuestra desembolsos, cancelaciones o causas del cambio.
+`src/core/` contiene CSV, aritmética, contrato de registro y validación de propuestas. `src/processes/index.mjs` registra cartera bancaria mediante `banking-definition.mjs`; `banking-ui.mjs` conserva su vista. `src/ui.mjs` coordina catálogo y selección; `src/report.mjs` y `worker/api.mjs` mantienen informes e IA. El puente descompone la variación entre créditos presentes en ambos cortes, entradas y salidas del ámbito filtrado. Las migraciones solo consideran créditos presentes en ambos cortes. Ninguno de esos desgloses demuestra desembolsos, cancelaciones o causas del cambio. Véase [procesos y solicitudes](docs/procesos_y_solicitudes.md).
 
-La [versión 4 pública](https://indagadata-cartera.jhonattangbc.chatgpt.site) se desplegó el 17 de octubre de 2026 a las 17:46:25 de Colombia. Añade Gemini con secretos de servidor y los límites de cortesía descritos arriba. Las 53 pruebas automatizadas pasan, incluidas las regresiones financieras, filtros, un solo corte, comparaciones, puente, migraciones y exportaciones. La versión 3 había superado 13 escenarios de navegador y 52 indicadores monetarios; en la versión 4 se comprobaron consultas reales desde el navegador y desde el endpoint público, evidencia exactamente igual al motor y un reintento inmediato bloqueado con HTTP 429. Las evidencias técnicas seleccionadas están en `evidence/`. La fuente de Sites es `bcf18fa05c7effc7c7d683678d3a32c54d42cf71`; su historial es independiente del de GitHub.
+La [versión 5 pública](https://indagadata-cartera.jhonattangbc.chatgpt.site) se desplegó el 17 de octubre de 2026 a las 21:18:46 de Colombia. Incorpora catálogo y recepción persistente de propuestas en D1, conservando Gemini y el motor financiero de la versión 4. Se verificaron 74 pruebas automatizadas, 39 comprobaciones HTTP de privacidad/validación y dos envíos sintéticos reales leídos desde administración autenticada. El CSV descargado conserva las variaciones negativas como números. La fuente publicada en Sites es `c2db1dd85b616c295ed11856b6559982a1dec28d`; su historial es independiente del de GitHub. Esta sincronización conserva el historial existente y no despliega otra versión de Sites.
 
 Se entregan por separado la [documentación técnica](https://docs.google.com/document/d/10CuG1kXGFjWSf918azmoZZ1ba93RdE72WEOnl7RJLCM/edit) y el [historial de prompts](https://docs.google.com/document/d/15jdCWmHdlcX9l0p4gqr3nSodnTBmr3JslbuqIA4qGHs/edit), ambos como Google Docs en la [carpeta del hackathon](https://drive.google.com/drive/folders/1XuLlHWxwmVuHV4vJmviwLaNRU_YiQmk6). Se comprobó acceso anónimo de lectura a los dos documentos y al repositorio público. Los borradores locales anteriores no forman parte de esta entrega. Quedan pendientes el vídeo de máximo cinco minutos y el envío mediante el formulario oficial.
 
 Gemini obtuvo respuestas reales en producción el 17 de octubre, HTTP 200, con `gemini-3.5-flash-lite`. Se contrastaron −715.859.081 COP de variación de saldo y −256.711.009 COP de aporte de libre inversión. `GEMINI_API_KEY` y `GEMINI_FREE_TIER_CONFIRMED` están configurados como secretos en Sites; no aparecen en el código ni en los recursos y respuestas HTTP comprobados. Tampoco se encontraron en los registros recientes disponibles del Worker. Google AI Studio mostró «Nivel gratuito» para una clave enmascarada cuyo sufijo coincide con la configurada; no se activó facturación ni ningún plan de pago. El motor determinista sigue disponible si la IA alcanza su cuota o falla. Una respuesta correcta no garantiza todas las preguntas: una consulta de QA respondió solo sobre el producto y omitió el total; una pregunta explícita y la prueba HTTP posterior sí devolvieron las cifras de cartera completas.
 
-No se implementó formulario de nuevos procesos: el núcleo tiene prioridad y no hay correo ni envío simulado.
+## Solicitudes de nuevos procesos
+
+Formulario público sin registro, con nombre, problema, dataset y resultados esperados obligatorios y correo opcional. Solo confirma recepción tras una escritura real; no envía correo automático. Los campos se guardan de forma privada. No introducir información confidencial ni datos de clientes.
+
+En local, `scripts/serve.mjs` aplica el esquema a `.sites-local/process-requests.sqlite`, excluido de Git y del artefacto. En Sites, el binding `DB` y las migraciones versionadas de `drizzle/` crean `process_requests`. El build las copia a `dist/.openai/drizzle`; no se ejecutan cambios de esquema desde peticiones HTTP. Para generar nuevas migraciones, usar `npm ci --ignore-scripts` y `npm run db:generate`; estas dependencias son solo de desarrollo. No modificar migraciones ya aplicadas.
+
+El propietario consulta desde el visor privado de base de datos de Sites o mediante su conector autenticado, seleccionando `DB` → `process_requests`. No hay API pública de lectura, listado o exportación de propuestas. El límite compartido de recepción es persistente en D1: 20 registros por hora y 15 segundos entre registros. Es independiente del límite de cortesía de Gemini en memoria.
+
+Un timeout puede producirse tras guardar: el formulario avisa y no reintenta automáticamente. Queda pendiente definir retención y eliminación; no existe borrado automático. No se activó facturación ni se contrataron servicios adicionales. El uso autorizado de D1 no garantiza que el proveedor mantenga sus condiciones indefinidamente. La verificación de v5 no incluyó una nueva generación real de Gemini; las respuestas reales descritas arriba pertenecen a las pruebas previas del 17 de octubre.
